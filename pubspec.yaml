@@ -1,0 +1,23 @@
+name: blind_call_assistant
+description: A fully voice-controlled call assistant for blind and low-vision users.
+publish_to: 'none'
+version: 0.1.0
+
+environment:
+  sdk: '>=3.3.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  speech_to_text: ^7.0.0
+  flutter_tts: ^4.0.2
+  flutter_contacts: ^1.1.9+2
+  permission_handler: ^11.3.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+
+flutter:
+  uses-material-design: true
