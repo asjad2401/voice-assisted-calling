@@ -27,14 +27,11 @@ class CallPlatform {
   Stream<CallEvent>? _events;
 
   Stream<CallEvent> get events {
-    _events ??= _eventChannel
-        .receiveBroadcastStream()
-        .map((e) => CallEvent.fromMap(e as Map));
+    _events ??= _eventChannel.receiveBroadcastStream().map((e) => CallEvent.fromMap(e as Map));
     return _events!;
   }
 
-  Future<void> placeCall(String phoneNumber) =>
-      _methodChannel.invokeMethod('placeCall', {'number': phoneNumber});
+  Future<void> placeCall(String phoneNumber) => _methodChannel.invokeMethod('placeCall', {'number': phoneNumber});
 
   Future<void> answerCall() => _methodChannel.invokeMethod('answerCall');
 
@@ -59,6 +56,5 @@ class CallPlatform {
 
   /// Prompts the user through Android's system default dialer picker
   /// so this app can register as a calling account and receive InCallService callbacks.
-  Future<void> requestPhoneAccountSetup() =>
-      _methodChannel.invokeMethod('requestPhoneAccountSetup');
+  Future<void> requestPhoneAccountSetup() => _methodChannel.invokeMethod('requestPhoneAccountSetup');
 }

@@ -1,7 +1,7 @@
-name: blind_call_assistant
-description: A fully voice-controlled call assistant for blind and low-vision users.
+name: vision_assist
+description: Offline, voice-first everyday assistant for blind and low-vision users.
 publish_to: 'none'
-version: 0.1.0
+version: 1.0.0+1
 
 environment:
   sdk: '>=3.3.0 <4.0.0'
@@ -12,12 +12,26 @@ dependencies:
   speech_to_text: ^7.0.0
   flutter_tts: ^4.0.2
   flutter_contacts: ^1.1.9+2
-  permission_handler: ^11.3.1
+  permission_handler: ^13.0.2
+  camera: ^0.12.1
+  tflite_flutter: ^0.12.1
+  google_mlkit_text_recognition: ^0.17.1
+  google_mlkit_image_labeling: ^0.16.1
+  google_mlkit_face_detection: ^0.15.1
+  sqflite: ^2.4.4
+  path: ^1.9.1
+  path_provider: ^2.1.6
+  sensors_plus: ^7.1.1
+  geolocator: ^14.1.1
+  vibration: ^3.2.1
+  google_mlkit_commons: ^0.13.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^4.0.0
+  flutter_lints: ^6.0.0
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/models/

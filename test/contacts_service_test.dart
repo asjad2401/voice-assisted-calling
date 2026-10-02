@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
-import 'package:blind_call_assistant/services/contacts_service.dart';
+import 'package:vision_assist/modules/calls/contacts_service.dart';
 
 void main() {
   group('ContactsService - Normalization & Levenshtein Tests', () {

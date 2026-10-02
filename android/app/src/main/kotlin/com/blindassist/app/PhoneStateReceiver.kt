@@ -1,4 +1,4 @@
-package com.blindassist.call
+package com.blindassist.app
 
 import android.content.BroadcastReceiver
 import android.content.Context

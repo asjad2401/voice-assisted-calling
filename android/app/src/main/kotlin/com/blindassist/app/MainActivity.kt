@@ -1,4 +1,4 @@
-package com.blindassist.call
+package com.blindassist.app
 
 import android.app.role.RoleManager
 import android.content.Context
@@ -43,6 +43,8 @@ class MainActivity : FlutterActivity() {
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
+
+        DeviceChannel(this, flutterEngine.dartExecutor.binaryMessenger)
 
         EventChannel(flutterEngine.dartExecutor.binaryMessenger, eventChannelName)
             .setStreamHandler(CallEventBridge)

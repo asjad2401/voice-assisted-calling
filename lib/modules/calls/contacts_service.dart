@@ -152,7 +152,7 @@ class ContactsService {
         .replaceAll(RegExp(r'[òóôõö]'), 'o')
         .replaceAll(RegExp(r'[ùúûü]'), 'u')
         .replaceAll(RegExp(r'[ñ]'), 'n');
-    
+
     // Expand common spoken aliases
     if (s == 'mom' || s == 'mother' || s == 'mommy') s = 'mom';
     if (s == 'dad' || s == 'father' || s == 'daddy') s = 'dad';
@@ -246,10 +246,7 @@ class ContactsService {
         if (substitution < minDistance) minDistance = substitution;
 
         // Damerau transposition
-        if (i > 1 &&
-            j > 1 &&
-            source[i - 1] == target[j - 2] &&
-            source[i - 2] == target[j - 1]) {
+        if (i > 1 && j > 1 && source[i - 1] == target[j - 2] && source[i - 2] == target[j - 1]) {
           final transposition = matrix[i - 2][j - 2] + cost;
           if (transposition < minDistance) minDistance = transposition;
         }

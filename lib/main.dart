@@ -1,20 +1,26 @@
 import 'package:flutter/material.dart';
-import 'screens/dial_screen.dart';
+import 'package:flutter/services.dart';
+
+import 'shell/app_controller.dart';
+import 'shell/home_screen.dart';
 
 void main() {
-  runApp(const BlindCallAssistantApp());
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+  runApp(VisionAssistApp(controller: AppController()));
 }
 
-class BlindCallAssistantApp extends StatelessWidget {
-  const BlindCallAssistantApp({super.key});
+class VisionAssistApp extends StatelessWidget {
+  final AppController controller;
+  const VisionAssistApp({super.key, required this.controller});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Call Assistant',
+      title: 'Vision Assist',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData.dark(),
-      home: const DialScreen(),
+      theme: ThemeData.dark(useMaterial3: true),
+      home: HomeScreen(controller: controller),
     );
   }
 }

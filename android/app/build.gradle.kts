@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.blindassist.call"
+    namespace = "com.blindassist.app"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
@@ -20,7 +20,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.blindassist.call"
+        applicationId = "com.blindassist.app"
         minSdk = 26
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
@@ -29,7 +29,9 @@ android {
 
     buildTypes {
         release {
+            // Replace with your own release keystore before publishing.
             signingConfig = signingConfigs.getByName("debug")
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
 }

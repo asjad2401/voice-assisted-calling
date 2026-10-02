@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:blind_call_assistant/services/call_platform.dart';
+import 'package:vision_assist/modules/calls/call_platform.dart';
 
 void main() {
   group('CallEvent Data Deserialization Tests', () {

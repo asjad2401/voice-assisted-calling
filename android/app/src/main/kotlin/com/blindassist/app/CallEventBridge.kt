@@ -1,4 +1,4 @@
-package com.blindassist.call
+package com.blindassist.app
 
 import io.flutter.plugin.common.EventChannel
 
