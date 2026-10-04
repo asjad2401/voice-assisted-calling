@@ -88,7 +88,7 @@ String sosMessage(EmergencyProfile p, {double? lat, double? lng, double? accurac
   if (p.bloodGroup.isNotEmpty) b.write('Blood group ${p.bloodGroup}. ');
   if (p.conditions.isNotEmpty) b.write('Conditions: ${p.conditions}. ');
   final t = at ?? DateTime.now();
-  b.write('Sent ${t.hour.toString().padLeft(2, '0')}:${t.minute.toString().padLeft(2, '0')} by Vision Assist.');
+  b.write('Sent ${t.hour.toString().padLeft(2, '0')}:${t.minute.toString().padLeft(2, '0')} by Life Lense.');
   return b.toString();
 }
 

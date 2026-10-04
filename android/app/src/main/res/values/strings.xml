@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="overlay_chip_description">Open Life Lense</string>
+    <string name="overlay_chip_channel">Floating button</string>
+    <string name="overlay_chip_notification">Life Lense floating button is on</string>
+</resources>

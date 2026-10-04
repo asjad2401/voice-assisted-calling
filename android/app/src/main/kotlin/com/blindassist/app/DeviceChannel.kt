@@ -1,11 +1,14 @@
 package com.blindassist.app
 
 import android.app.Activity
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.media.AudioAttributes
 import android.media.AudioFormat
 import android.media.AudioTrack
+import android.net.Uri
 import android.os.Build
+import android.provider.Settings
 import android.telephony.SmsManager
 import android.view.WindowManager
 import io.flutter.plugin.common.BinaryMessenger
@@ -56,6 +59,13 @@ class DeviceChannel(private val activity: Activity, messenger: BinaryMessenger) 
                         if (on) activity.window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
                         else activity.window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
                     }
+                    result.success(null)
+                }
+                "overlayAllowed" -> result.success(OverlayChipService.canShow(activity))
+                "requestOverlayPermission" -> {
+                    activity.startActivity(
+                        Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:${activity.packageName}"))
+                    )
                     result.success(null)
                 }
                 else -> result.notImplemented()

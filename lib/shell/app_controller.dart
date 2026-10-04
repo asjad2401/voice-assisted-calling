@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math' as math;
 
 import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:sensors_plus/sensors_plus.dart';
 
@@ -128,7 +129,7 @@ class AppController extends ChangeNotifier implements ModuleHost {
 
     final firstRun = !Settings.instance.tutorialDone;
     if (firstRun) {
-      await speaker.speak('Welcome to Vision Assist, your offline assistant. First I need a few permissions. '
+      await speaker.speak('Welcome to Life Lense, your offline assistant. First I need a few permissions. '
           'A sighted helper can tap allow, or you can find the allow button near the bottom of the screen.');
     }
     await _requestPermissions(spoken: firstRun);
@@ -142,6 +143,38 @@ class AppController extends ChangeNotifier implements ModuleHost {
       await Settings.instance.save();
     }
     await _enter(active, announce: !firstRun);
+    await offerOverlayChip();
+  }
+
+  static const _device = MethodChannel('vision_assist/device');
+
+  Future<bool> _overlayAllowed() async {
+    try {
+      return await _device.invokeMethod<bool>('overlayAllowed') ?? false;
+    } catch (_) {
+      return false;
+    }
+  }
+
+  /// The floating chip needs Android's "Display over other apps" switch,
+  /// which only the system settings screen can turn on. Explain it once
+  /// unprompted; [force] (the voice command) explains it again.
+  Future<void> offerOverlayChip({bool force = false}) async {
+    if (await _overlayAllowed()) {
+      if (force) {
+        await speaker.speak('The floating button is already on. It sits in the top right corner when you leave the app.');
+      }
+      return;
+    }
+    if (!force && Settings.instance.overlayPrompted) return;
+    Settings.instance.overlayPrompted = true;
+    await Settings.instance.save();
+    await speaker.speak('Life Lense can keep a small round button in the top right corner of the screen, over other apps, '
+        'so you can open it from anywhere with one tap. On the next screen, turn on the switch for Life Lense, then go back. '
+        'A sighted helper can do this for you.');
+    try {
+      await _device.invokeMethod('requestOverlayPermission');
+    } catch (_) {}
   }
 
   Future<void> _requestPermissions({bool spoken = false}) async {
@@ -177,6 +210,7 @@ class AppController extends ChangeNotifier implements ModuleHost {
       'Tap once anywhere for the main action of the mode, such as describing what is in front of you. Double tap for the second action.',
       'Press and hold anywhere to give a voice command after the beep. For example: "read this", "how much money is this", "find my keys", "call Ahmed", "where am I", or "help".',
       'Swipe up to repeat the last thing I said. Swipe down to stop me talking.',
+      'When you leave the app, a round button stays in the top right corner of the screen. Tap it to come back from any app. Say "floating button" to set it up.',
       'In an emergency, say "help me", or shake the phone hard three times, and I will alert your emergency contacts.',
       'Everything works without internet. For the best voice recognition offline, install the offline English speech pack in your phone settings. Say "help" any time to hear this again.',
     ];
@@ -335,6 +369,7 @@ class AppController extends ChangeNotifier implements ModuleHost {
     // ("clock directions" is not the time, "flashlight" is not light level).
     final raw = normalizeUtterance(c.raw);
     if (raw.contains('tutorial')) return tutorial();
+    if (raw.contains('floating') || raw.contains('overlay')) return offerOverlayChip(force: true);
     if (raw.contains('permission')) {
       await speaker.speak('Opening app settings. Choose permissions and allow them.');
       await openAppSettings();

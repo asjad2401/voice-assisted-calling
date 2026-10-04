@@ -1,4 +1,4 @@
-# Vision Assist
+# Life Lense
 
 A fully offline, voice-first Android app for blind and visually impaired people. It
 merges the original **Blind Call Assistant** (voice calling) and the **PKR currency

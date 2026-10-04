@@ -10,6 +10,7 @@ class Settings {
   bool haptics = true;
   bool shakeForSos = true;
   bool tutorialDone = false;
+  bool overlayPrompted = false;
   bool useClockDirections = false;
   String lastModeId = 'explore';
   Map<String, int> hintCounts = {};
@@ -22,6 +23,7 @@ class Settings {
     haptics = m['haptics'] as bool? ?? haptics;
     shakeForSos = m['shakeForSos'] as bool? ?? shakeForSos;
     tutorialDone = m['tutorialDone'] as bool? ?? tutorialDone;
+    overlayPrompted = m['overlayPrompted'] as bool? ?? overlayPrompted;
     useClockDirections = m['clock'] as bool? ?? useClockDirections;
     lastModeId = m['lastMode'] as String? ?? lastModeId;
     hintCounts = ((m['hints'] as Map?) ?? {}).map((k, v) => MapEntry(k as String, v as int));
@@ -33,6 +35,7 @@ class Settings {
         'haptics': haptics,
         'shakeForSos': shakeForSos,
         'tutorialDone': tutorialDone,
+        'overlayPrompted': overlayPrompted,
         'clock': useClockDirections,
         'lastMode': lastModeId,
         'hints': hintCounts,

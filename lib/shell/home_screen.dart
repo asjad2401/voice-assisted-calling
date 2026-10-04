@@ -138,8 +138,18 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
 class _Preview extends StatelessWidget {
   const _Preview();
 
+  // Listens to the camera itself: as a const child, this widget is skipped
+  // when the parent rebuilds, so it would otherwise stay black if it was
+  // first built before the camera finished initialising.
   @override
   Widget build(BuildContext context) {
+    return ListenableBuilder(
+      listenable: CameraService.instance,
+      builder: (context, _) => _buildPreview(),
+    );
+  }
+
+  Widget _buildPreview() {
     final ctl = CameraService.instance.controller;
     if (ctl == null || !ctl.value.isInitialized) return const ColoredBox(color: Colors.black);
     return ExcludeSemantics(

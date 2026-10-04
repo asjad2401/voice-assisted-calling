@@ -17,7 +17,7 @@ class VisionAssistApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Vision Assist',
+      title: 'Life Lense',
       debugShowCheckedModeBanner: false,
       theme: ThemeData.dark(useMaterial3: true),
       home: HomeScreen(controller: controller),

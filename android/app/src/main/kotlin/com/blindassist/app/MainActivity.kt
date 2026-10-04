@@ -25,6 +25,40 @@ class MainActivity : FlutterActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         configureWindowFlags()
+        setFrameworkHandlesBack(true)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        OverlayChipService.setAppVisible(true)
+        // Also picks up the overlay permission right after the user grants it.
+        OverlayChipService.start(this)
+    }
+
+    override fun onPause() {
+        OverlayChipService.setAppVisible(false)
+        super.onPause()
+    }
+
+    /**
+     * Back on the root screen would finish the Activity and tear down the
+     * Flutter engine while the camera is still streaming frames into it,
+     * which crashes ("FlutterJNI is not attached to native"). It would also
+     * stop incoming calls from being announced. Behave like Home instead.
+     */
+    override fun popSystemNavigator(): Boolean {
+        moveTaskToBack(true)
+        return true
+    }
+
+    /**
+     * On the root route Flutter unregisters its back callback, and on
+     * Android 13+ the system back gesture then finishes the Activity directly,
+     * bypassing [popSystemNavigator]. Keep the callback registered so every
+     * back press reaches Flutter and ends in [popSystemNavigator].
+     */
+    override fun setFrameworkHandlesBack(frameworkHandlesBack: Boolean) {
+        super.setFrameworkHandlesBack(true)
     }
 
     private fun configureWindowFlags() {
